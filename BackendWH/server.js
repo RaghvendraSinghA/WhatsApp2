@@ -47,7 +47,12 @@ app.use('/api/messages',messageRouter)
 
 await connectDB()
 
+//error came on vercel so if attacher and exported server
+if(process.env.NODE_ENV !== "production"){
 const PORT=process.env.PORT || 5000
 server.listen(PORT,()=>{
     console.log("Server is running on ",PORT)
 })
+}
+
+export default server
