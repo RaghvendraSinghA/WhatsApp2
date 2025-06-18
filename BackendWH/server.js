@@ -47,12 +47,14 @@ app.use('/api/messages',messageRouter)
 
 await connectDB()
 
-//error came on vercel so if attacher and exported server
+//error came on vercel so if block{} attached and exported server also for vercel.
 if(process.env.NODE_ENV !== "production"){
 const PORT=process.env.PORT || 5000
 server.listen(PORT,()=>{
     console.log("Server is running on ",PORT)
 })
 }
+
+//vercel manages the server by itself thats why its known as serverless.we just have to export the server for vercel,we can't control server manually and say listen on port 5000.
 
 export default server
