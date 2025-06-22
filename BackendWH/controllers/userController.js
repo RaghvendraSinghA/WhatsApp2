@@ -39,7 +39,9 @@ export const login= async(req,res)=>{
     try{
         const {email,password}=req.body
         const userData=await User.findOne({email})
-        console.log("inside login")
+        if(!userData){
+            res.json({success:false,message:"User doesn't exist"})
+        }
 
         const isPasswordCorrect=await bcrypt.compare(password,userData.password)
 
