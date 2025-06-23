@@ -90,7 +90,7 @@ const ChatContainer = ()=>{
                         type="text" placeholder="Send a message.." className="flex-1 text-sm p-3 rounded-lg outline-none text-black placeholder-gray-500" />
                         <input onChange={handleSendImage} type="file" id="image" accept='image/png, image/jpeg' hidden />
                         <label htmlFor='image'>
-                            <img src={assets.gallery_icon} alt="" className="w-5 mr-2 cursor-pointer" />
+                            <img src={'gallery.png'} alt="" className="w-7 mr-2 cursor-pointer" />
                         </label>
                     </div>
                     <img onClick={handleSendMessage} src={assets.send_button} alt="" className='w-7 cursor-pointer' />
