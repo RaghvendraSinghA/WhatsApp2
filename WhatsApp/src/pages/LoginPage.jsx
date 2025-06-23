@@ -28,8 +28,8 @@ const LoginPage=()=>{
         {/*--left */}
         <img src={'favicon.png'} alt="" className="w-[min(30vw,250px)]"/>
         {/* right*/}
-        <form onSubmit={onSubmitHandler} className="border-4 bg-white text-white border-gray-400/40 p-6 flex flex-col gap-6 rounded-2xl shadow-2xl">
-        <h2 className="font-medium text-2xl flex justify-between items-center text-blue-700/60">
+        <form onSubmit={onSubmitHandler} className="border-2 bg-white/50 text-white border-white/30 p-6 flex flex-col gap-6 rounded-2xl shadow-2xl">
+        <h2 className="font-medium text-2xl flex justify-between items-center text-blue-700/80">
             {currState}
             {isDataSubmitted && 
             <img onClick={()=>setIsDataSubmitted(false)} src={assets.arrow_icon} alt="" className="w-5 cursor-pointer" />
