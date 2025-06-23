@@ -51,7 +51,7 @@ const LoginPage=()=>{
 
     {
         currState==="Sign up" && isDataSubmitted &&(
-            <textarea onChange={(e)=>setBio(e.target.value)} value={bio} rows={4} className="p-2 border border-gray-500 rounded-md focus:outline-none focus:outline-none focus:ring-2 focus:ring-indigo-300" placeholder="Your bio.." required> </textarea>
+            <textarea onChange={(e)=>setBio(e.target.value)} value={bio} rows={4} className="p-2 border border-gray-500 rounded-md focus:outline-none focus:outline-none focus:ring-2 focus:ring-indigo-300 text-blue-900" placeholder="Your bio.." required> </textarea>
         )
     }
 
