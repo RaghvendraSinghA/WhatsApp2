@@ -17,10 +17,10 @@ const Sidebar= ()=>{
         getUsers()
     },[onlineUsers])
     return(
-        <div className={`bg-[#8185B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-white ${selectedUser?"max-md:hidden":""}`}>
+        <div className={`bg-[#8185B2]/10 h-full p-5 rounded-r-xl overflow-y-scroll text-black-800 ${selectedUser?"max-md:hidden":""}`}>
             <div className='pb-5'>
                 <div className='flex justify-between items-center'>
-                    <img src={assets.logo} alt='logo' className='max-w-40' />
+                    <img src={'favicon.png'} alt='logo' className='max-w-[80px]' />
                     <div className='relative py-2 group'>
                         <img src={assets.menu_icon} alt='menu' className='max-h-5 cursor-pointer' />
 
@@ -33,13 +33,14 @@ const Sidebar= ()=>{
                 </div>
 
                 <div className='bg-[#282142] rounded-full flex items-center gap-2 py-3 px-4 mt-5'>
-                    <img src={assets.search_icon} alt="search" className='width-3' />
-                    <input onChange={(e)=>setInput(e.target.value)} type="text" className='bg-transparent border-none outline-none text-white text-xs placeholder-[#c8c8c8] flex-1' placeholder='Search user...' />
+                    <img src={assets.search_icon} alt="search" className='w-3' />
+                    <input onChange={(e)=>setInput(e.target.value)} type="text" className='bg-transparent border-none outline-none text-white text-sm placeholder-[#c8c8c8] flex-1' placeholder='Search user...' />
                 </div>
             </div>
 
             <div className='flex flex-col'>
                 {filteredUsers?.map((user,index)=>(
+                    <div>
                     <div key={index} onClick={()=>{setSelectedUser(user);setUnseenMessages(prev=>({...prev,[user._id]:0}))}} className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm ${selectedUser?._id==user._id&&'bg-[#282142]/50'}`}>
                         <img src={user?.profilePic || assets.avatar_icon} className='w-[35px] aspect-[1/1] rounded-full' />
                         <div className='flex flex-col leading-5'>
@@ -47,13 +48,15 @@ const Sidebar= ()=>{
 
                             {
                                 onlineUsers.includes(user._id)
-                                ?<span className='text-green-400 text-xs'>Online</span>
+                                ?<span className='text-green-600 text-xs'>Online</span>
                                 :<span className="text-neutral-400 test-xs">Offline</span>
                             }
                        </div>
                        {unseenMessages[user._id]>0 && <p className='absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full bg-violet-500/50'>{unseenMessages[user._id]}</p>}
                     </div>
-                ))}
+                    <hr className="border-t-1 border-gray-400"/>
+                    </div>
+                    ))}
             </div>
         </div>
     )
