@@ -26,13 +26,14 @@ io.on("connection",(socket)=>{
     }
 
     io.emit("getOnlineUsers",Object.keys(userSocketMap))
+    //above lines is like calling a function from backend without using response etc.direct pass data to it.
 
     socket.on("disconnect",()=>{
         console.log("User disconnected",userId)
         delete userSocketMap[userId]
     })
 
-    io.emit("getOnlineUsers",Object.keys(userSocketMap))
+    io.emit("getOnlineUsers",Object.keys(userSocketMap))// this line will be inside disconnect even listener,wrote it wrong.
 })
 
 app.use(express.json({limit:"4mb"}))

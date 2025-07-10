@@ -12,7 +12,7 @@ export const ChatProvider=({children})=>{
     const [unseenMessages,setUnseenMessages]=useState({})
 
     const {socket,axios}=useContext(AuthContext)
-
+    //got the users socketId here
 
     const getUsers=async()=>{
         try{
@@ -27,7 +27,7 @@ export const ChatProvider=({children})=>{
         }
     }
 
-    const getMessages=async(userId)=>{              //selected user
+    const getMessages=async(userId)=>{              //selected user and passed selected userID
         try{
             const {data} = await axios.get(`/api/messages/${userId}`)
             if(data.success){
@@ -68,6 +68,8 @@ export const ChatProvider=({children})=>{
                 }))
             }
         })
+
+        //event listening if new message object have same properties as the selected user i am chatting then do this or else do this.
     }
 
 

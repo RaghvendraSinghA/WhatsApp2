@@ -23,9 +23,14 @@ export const getUserForSidebar=async(req,res)=>{
                 unseenMessages[user._id]= messages.length
             }
         })
+        //async functions returns a promise with resolved value or undefined promise<undefined>.
+        // !! important logic
 
         //I am setting promises array with promises which are void bcoz no return used,they only execute.use chatgpt to covert it in resolve reject too.
         await Promise.all(promises)
+        //filteredUser--All users on mongoDb except me.
+        //unseenMessages---just length of all unseen messages of each user with their id.It doesn't have messages.
+
         res.json({success:true,filteredUsers,unseenMessages})
 
     }catch(e){
@@ -46,6 +51,8 @@ export const getMessages = async(req,res)=>{
                 {senderId:selectedUserId,receiverId:myId}
             ]
         })
+
+        //find all messages in which either one exist from given aray
 
         await Message.updateMany({senderId:selectedUserId,receiverId:myId},{seen:true})
 

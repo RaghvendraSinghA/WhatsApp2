@@ -25,6 +25,8 @@ export const signup=async(req,res)=>{
             fullName,email,password:hashedPassword,bio
         })
 
+        //newUser=return object by mongoDb as it is saved like id name timestamps etc.
+
         const token=generateToken(newUser._id)             //use to validate login of user,we will jsut set it in localstorage.not good but ok,
         res.json({success:true,userData:newUser,token,message:"Account created Successfully"})
     }catch(e){

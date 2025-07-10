@@ -13,13 +13,17 @@ export const AuthContext=createContext()
 export const AuthProvider=({children})=>{
 
     const [token,setToken]=useState(localStorage.getItem("token"))
-    const [authUser,setAuthUser]=useState(null)
-    const [onlineUsers,setOnlineUsers]=useState([])
-    const [socket,setSocket]=useState(null)
+    const [authUser,setAuthUser]=useState(null)  //for getting your own data
+    const [onlineUsers,setOnlineUsers]=useState([])//for sidebar
+    const [socket,setSocket]=useState(null) 
+
+    console.log("authUSer",authUser)
 
     const checkAuth=async()=>{
+        //called by useEffect to get 
         try{
             const {data} =await axios.get("/api/auth/check")
+            console.log("userdata",data)
             if(data.success){
                 setAuthUser(data.user)
                 connectSocket(data.user)
@@ -30,12 +34,18 @@ export const AuthProvider=({children})=>{
     }
 
     const login=async(state,credentials)=>{
+        //state is either login or sign-up, credentials user details like email,password /username
         console.log("here")
         try{
             const {data}= await axios.post(`/api/auth/${state}`,credentials)
+            console.log("data from login",data)
             if(data.success){
                 setAuthUser(data.userData)
                 connectSocket(data.userData)
+
+
+
+
                 axios.defaults.headers.common["token"]=data.token
                 setToken(data.token)
                 localStorage.setItem("token",data.token)
@@ -69,8 +79,11 @@ export const AuthProvider=({children})=>{
         axios.defaults.headers.common["token"]=null
 
         toast.success("Logged out")
-        socket.disconnect()
+        socket.disconnect() //this will call disconnect event on backend socket io server.here socket==newSocket bcoz we set it like that.
     }
+
+
+    //socket connection
     const connectSocket=(userData)=>{
         if(!userData || socket?.connected) return
 
@@ -79,13 +92,24 @@ export const AuthProvider=({children})=>{
                 userId:userData._id
             }
         })
+        //why sending userId? so that we could know that this user is connected to this socketId and we can message them via their id.Else how would we know whom to message?
+
+        //newSocket have socketId assigned by backend to the connection and many event listeners and functions.Even it have custom events which we have created on backend.
+
+        //it also crates a connection to server.
         newSocket.connect()
         setSocket(newSocket)
          
         newSocket.on("getOnlineUsers",(userIds)=>{
             setOnlineUsers(userIds)
         })
+
+        //this event listening on server and calls this callbacks if event triggers.
     }
+
+
+
+
 
     useEffect(()=>{
         if(token){

@@ -22,13 +22,21 @@ const LoginPage=()=>{
         login(currState==="Sign up"?"signup":"login",{fullName,email,password,bio})  
     }
 
+    const handleDemo=(e)=>{
+        e.preventDefault()
+            setIsDataSubmitted(true)
+       login("login",{fullName:"Demo",email:"demo@gm.com",password:"12345678",bio})
+
+       //jwt is required after we login???
+    }
+
 
     return(<>
-    <div className='min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col border backdrop-blur-md'>
+    <div className='min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col border backdrop-blur-xl'>
         {/*--left */}
-        <img src={'favicon.png'} alt="" className="w-[min(30vw,250px)]"/>
+        <img src="/appLogo4.gif" alt="" className="w-[min(30vw,350px)] rounded-2xl sm:rounded-lg md:rounded-xl lg:rounded-4xl"/>
         {/* right*/}
-        <form onSubmit={onSubmitHandler} className="border-2 bg-white/50 text-white border-white/30 p-6 flex flex-col gap-6 rounded-2xl shadow-2xl">
+        <form onSubmit={onSubmitHandler} className="border-2 bg-white/50 text-white border-white/30 p-6 flex flex-col gap-6 rounded-2xl shadow-2xl min-w-[320px]">
         <h2 className="font-medium text-2xl flex justify-between items-center text-blue-700/80">
             {currState}
             {isDataSubmitted && 
@@ -58,17 +66,19 @@ const LoginPage=()=>{
     <button type="submit" className="py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer">{currState==="Sign up"?"Create Account":"Login"}</button>
 
 
-    <div className="flex items-center gap-2 text-sm text-gray-500">
+    {currState==="Sign up" && <div className={`flex items-center gap-2 text-sm text-gray-500 ${currState==="login"?"opacity-0":"opacity-100"}`}>
         <input type="checkbox" />
         <p>I agree the terms and conditions of this app.</p>
-    </div>
+    </div>}
 
     <div className="flex flex-col gap-2">
         {currState==="Sign up"?(<p className="text-sm text-gray-600">Already have an account? <span onClick={()=>{setCurrState("Login");setIsDataSubmitted(false)}}className="font-medium text-violet-500 cursor-pointer">Login!</span></p>)
            :
         (<p className="text-sm text-gray-600">Create an account! <span onClick={()=>setCurrState("Sign up")} className="font-medium text-violet-500 cursor-pointer">Click here!</span></p>)}
     </div>
+        
 
+        {currState=="Sign up" && <button onClick={handleDemo} type="submit" className="py-3 bg-gradient-to-l from-orange-400 to-violet-600 text-white rounded-md cursor-pointer">Demo/Test Login</button>}
         </form>
     </div>
     </>)
