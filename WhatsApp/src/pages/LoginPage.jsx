@@ -22,13 +22,33 @@ const LoginPage=()=>{
         login(currState==="Sign up"?"signup":"login",{fullName,email,password,bio})  
     }
 
-    const handleDemo=(e)=>{
-        e.preventDefault()
-            // setIsDataSubmitted(true)
-       login("login",{fullName:"Demo",email:"demo@gm.com",password:"12345678",bio})
+    // const handleDemo=(e)=>{
+    //     e.preventDefault()
+    //         // setIsDataSubmitted(true)
+    //    login("login",{fullName:"Demo",email:"demo@gm.com",password:"12345678",bio})
 
-       //jwt is required after we login???
-    }
+    //    //jwt is required after we login???
+    // }
+
+    const [loading, setLoading] = useState(false);
+
+const handleDemo = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    await login("login", {
+      fullName: "Demo",
+      email: "demo@gm.com",
+      password: "12345678",
+      bio,
+    });
+  } catch (err) {
+    console.error("Demo login failed:", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
 
     return(<>
@@ -78,7 +98,21 @@ const LoginPage=()=>{
     </div>
         
 
-        {currState=="Sign up" && <button type="button" onClick={handleDemo} className="py-3 bg-gradient-to-l from-orange-400 to-violet-600 text-white rounded-md cursor-pointer">Demo/Test Login</button>}
+        {/*{currState=="Sign up" && <button type="button" onClick={handleDemo} className="py-3 bg-gradient-to-l from-orange-400 to-violet-600 text-white rounded-md cursor-pointer">Demo/Test Login</button>}*/}
+
+        {currState=="Sign up"&&<button
+        type="button"
+        onClick={handleDemo}
+        disabled={loading}
+        className={`py-3 px-4 bg-gradient-to-l from-orange-400 to-violet-600 text-white rounded-md flex items-center justify-center gap-2 transition-opacity ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
+        >
+        {loading && <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>}
+        {loading ? "Logging in..." : "Demo/Test Login"}
+        </button>}
+
+
+
+
         </form>
     </div>
     </>)
