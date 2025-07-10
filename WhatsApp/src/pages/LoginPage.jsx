@@ -23,8 +23,8 @@ const LoginPage=()=>{
     }
 
     const handleDemo=(e)=>{
-        e.preventDefault()
-            setIsDataSubmitted(true)
+        // e.preventDefault()
+            // setIsDataSubmitted(true)
        login("login",{fullName:"Demo",email:"demo@gm.com",password:"12345678",bio})
 
        //jwt is required after we login???
