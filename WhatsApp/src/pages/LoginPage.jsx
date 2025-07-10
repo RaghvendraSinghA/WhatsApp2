@@ -23,7 +23,7 @@ const LoginPage=()=>{
     }
 
     const handleDemo=(e)=>{
-        // e.preventDefault()
+        e.preventDefault()
             // setIsDataSubmitted(true)
        login("login",{fullName:"Demo",email:"demo@gm.com",password:"12345678",bio})
 
@@ -78,7 +78,7 @@ const LoginPage=()=>{
     </div>
         
 
-        {currState=="Sign up" && <button onClick={handleDemo} type="submit" className="py-3 bg-gradient-to-l from-orange-400 to-violet-600 text-white rounded-md cursor-pointer">Demo/Test Login</button>}
+        {currState=="Sign up" && <button type="button" onClick={handleDemo} className="py-3 bg-gradient-to-l from-orange-400 to-violet-600 text-white rounded-md cursor-pointer">Demo/Test Login</button>}
         </form>
     </div>
     </>)
