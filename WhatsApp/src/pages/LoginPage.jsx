@@ -107,7 +107,7 @@ const handleDemo = async (e) => {
         className={`py-3 px-4 bg-gradient-to-l from-orange-400 to-violet-600 text-white rounded-md flex items-center justify-center gap-2 transition-opacity ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
         >
         {loading && <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>}
-        {loading ? "Logging in..." : "Demo/Test Login"}
+        {loading ? "Logging in..." : "Demo/Guest Login"}
         </button>}
 
 
