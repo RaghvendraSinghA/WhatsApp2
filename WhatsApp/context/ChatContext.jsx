@@ -7,12 +7,13 @@ export const ChatContext=createContext()
 
 export const ChatProvider=({children})=>{
     const [messages,setMessages]=useState([])
+    //Like Whatsapp we r not showing unseen messages without selecting a user but we show unseeMessages count.
     const [users,setUsers]=useState([])
     const [selectedUser,setSelectedUser]=useState(null)
     const [unseenMessages,setUnseenMessages]=useState({})
 
     const {socket,axios}=useContext(AuthContext)
-    //got the users socketId here
+    //got the socket object through which we can access user's means own data which we got from backent while loging.
 
     const getUsers=async()=>{
         try{
@@ -62,9 +63,12 @@ export const ChatProvider=({children})=>{
                 newMessage.seen=true
                 setMessages((prev)=>[...prev,newMessage])
                 axios.put(`/api/messages/mark/${newMessage._id}`)
+
+                //This block is when we r chatting to a user and he is selected.
             }else{
                 setUnseenMessages((prev)=>({
                     ...prev,[newMessage.senderId]:prev[newMessage.senderId]?prev[newMessage.senderId]+1:1
+                    //If unseenMessages have senderId then Increase unSeenMsg Count to 1.
                 }))
             }
         })
@@ -80,7 +84,7 @@ export const ChatProvider=({children})=>{
     useEffect(()=>{
         subscribeToMessages()
 
-        return ()=>unsubscribeFromMessage()
+        return ()=>unsubscribeFromMessage() //clean up of useEffect
     },[socket,selectedUser])
 
     const value={

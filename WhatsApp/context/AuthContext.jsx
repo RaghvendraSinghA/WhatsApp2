@@ -8,19 +8,21 @@ import {io} from 'socket.io-client'
 const backendUrl =import.meta.env.VITE_BACKEND_URL
 
 axios.defaults.baseURL=backendUrl
-export const AuthContext=createContext()
+export const AuthContext=createContext()    //what is this and why it exported??
+                                        //here we have created empty context store which value will be filled by AuthProvider component component and this object are interlinked.
 
 export const AuthProvider=({children})=>{
 
     const [token,setToken]=useState(localStorage.getItem("token"))
     const [authUser,setAuthUser]=useState(null)  //for getting your own data
-    const [onlineUsers,setOnlineUsers]=useState([])//for sidebar
+    const [onlineUsers,setOnlineUsers]=useState([])//for sidebar (list of all users).
     const [socket,setSocket]=useState(null) 
 
     console.log("authUSer",authUser)
 
     const checkAuth=async()=>{
-        //called by useEffect to get 
+        //called by below useEffect to get user(own) data from backend using token.Token is filled in header.
+        //How token can get userData from backend??
         try{
             const {data} =await axios.get("/api/auth/check")
             console.log("userdata",data)
@@ -101,10 +103,10 @@ export const AuthProvider=({children})=>{
         setSocket(newSocket)
          
         newSocket.on("getOnlineUsers",(userIds)=>{
-            setOnlineUsers(userIds)
+            setOnlineUsers(userIds) //Getting list of all online users on server from backend.
         })
 
-        //this event listening on server and calls this callbacks if event triggers.
+        //this is event listener active on backend server and calls this callbacks if "getOnlineusers"event triggers.
     }
 
 
@@ -128,4 +130,6 @@ export const AuthProvider=({children})=>{
             {children}
         </AuthContext.Provider>
     )
+    // {children} are those Components who will be wrapped by AuthContext.
+    //Using this componet we are initializing updating and managing store value.If u see above store is empty.
 }

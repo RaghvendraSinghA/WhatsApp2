@@ -90,7 +90,9 @@ export const sendMessage=async(req,res)=>{
 
         const newMessage= await Message.create({
             senderId,receiverId,text,image:imageUrl
-        })
+        }) //creating messages but,only storing in database with both users id.Its not like that both users have common array where messages are pushed.We are storing messages always on database for all users at one place.If user is live on socket then we send him too.
+
+        //if user comes live and login then he will be able to fetch messages using id of sender and his.
 
         //socket
         const receiverSocketId=userSocketMap[receiverId]

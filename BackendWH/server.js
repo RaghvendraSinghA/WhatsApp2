@@ -8,7 +8,7 @@ import messageRouter from './routes/messageRoutes.js'
 import {Server} from 'socket.io'
 
 const app=express()
-const server=http.createServer(app)
+const server=http.createServer(app) //converts it to bi directional http connection.
 
 export const io=new Server(server,{
     cors:{origin:"*"}
