@@ -9,7 +9,7 @@ export const getUserForSidebar=async(req,res)=>{
     try{
         const userId =req.user._id
         console.log("userID",userId)
-        const filteredUsers=await User.find({_id:{$ne:userId}}).select("-password") //$ne means not equal.Accessing all users of database.-password removes password property
+        const filteredUsers=await User.find({_id:{$ne:userId}}).select("-password") //$ne means not equal.Accessing all users of database.-password removes password property.All users on database except me.
 
 
         const unseenMessages={}
@@ -23,15 +23,31 @@ export const getUserForSidebar=async(req,res)=>{
                 unseenMessages[user._id]= messages.length
             }
         })
-        //async functions returns a promise with resolved value or undefined promise<undefined>.
-        // !! important logic
+        //Async function is used in map bcoz for each user with their userId we have to search messages on mongDb database.
 
-        //I am setting promises array with promises which are void bcoz no return used,they only execute.use chatgpt to covert it in resolve reject too.
+        //But why array of promises?Why not directly array of messages?
+        //bcoz,Async function in javascript returns promise by default even if u return anything.
+
+        //Who calls async function callbacks?
+        //map function calls each async callback,lol forgot this.
+
+        //When map calls the async callback function they return whole function wrapped in Promise and those promises are already started to execute internally.We don't need then() bcoz we are not asking anything in return from Promises.
+
+        //Now promises array looks like this-:
+        // promises = [p1<pending>,p2<pending>,p3<pending>,p4<pending>]
+        
+
         await Promise.all(promises)
+        //await only wait for all promises to execute,they don't return anything.They just execute and fill unseenMessages.without await Promise.all() half filled unseenMessages array would be send to frontend.
+
+        //after Promises.all(promises),all promises are finished and they return undefined thats why we are not storing result of promise.all().All promises executes and fill unseenMessages.
+
         //filteredUser--All users on mongoDb except me.
         //unseenMessages---just length of all unseen messages of each user with their id.It doesn't have messages.
 
         res.json({success:true,filteredUsers,unseenMessages})
+
+        //await resolves promise and gives resolved value.await doesn't block threat it only blocks async function execution.
 
     }catch(e){
         console.log(e.message)
