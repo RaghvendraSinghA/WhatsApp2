@@ -108,8 +108,9 @@ const handleDemo = async (e) => {
         >
         {loading && <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>}
         {loading ? "Logging in..." : "Demo/Guest Login"}
-        </button>}
-
+        </button>
+        }
+        {loading&&<p style={{color:"red",fontWeight:"200"}}>Slow host server...Please wait 1 min</p>}
 
 
 
